@@ -11,6 +11,7 @@ class RestaurantsController < ApplicationController
   end
 
   def show
+    @review = Review.new(restaurant_id: @restaurant.id) # Link the review to the restaurant
   end
 
   def create

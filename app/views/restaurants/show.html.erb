@@ -1,16 +1,38 @@
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
-
 <div class="container">
   <h1 style="text-align: center; color: #333; font-family: 'Roboto Slab', serif; font-size: 3em;"><%= @restaurant.name %></h1>
   <p style="font-size: 1.5em; font-family: 'Roboto Slab', serif;"><%= @restaurant.content %></p>
 
+  <!-- Display Rating with Stars -->
   <div style="text-align: center; margin-bottom: 20px;">
+    <strong>Rating:</strong>
+    <span style="font-size: 1.5em; margin-left: 10px;">
+      <% if @restaurant.rating.present? %>
+        <% @restaurant.rating.times do %>
+          <span class="star">&#9733;</span>
+        <% end %>
+        <% (5 - @restaurant.rating).times do %>
+          <span class="star empty">&#9733;</span>
+        <% end %>
+      <% else %>
+        <span class="star empty">&#9733;</span>
+        <span class="star empty">&#9733;</span>
+        <span class="star empty">&#9733;</span>
+        <span class="star empty">&#9733;</span>
+        <span class="star empty">&#9733;</span>
+      <% end %>
+    </span>
+  </div>
+
+  <!-- Review Form -->
+  <h2 style="text-align: center; color: #333; font-family: 'Roboto Slab', serif; font-size: 2em;">Add a Review</h2>
+  <%= render 'reviews/form_reviews', review: @review %>
+
+  <div style="text-align: center;">
     <%= link_to 'Back to the list', restaurants_path, class: 'btn btn-success', style: 'margin-right: 10px;' %>
     <%= link_to 'Edit', edit_restaurant_path(@restaurant), class: 'btn btn-secondary', style: 'margin-right: 10px;' %>
     <%= link_to 'Delete', @restaurant, data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: 'btn btn-danger' %>
   </div>
 </div>
-
 
 <!-- You can move the following CSS into your application's stylesheet -->
 <style>
@@ -32,5 +54,22 @@
   .action-buttons {
     text-align: center;
     margin-bottom: 20px;
+  }
+
+  .star {
+    color: #ffd700; /* Golden color for filled stars */
+  }
+
+  .empty {
+    color: #ccc; /* Light grey color for empty stars */
+  }
+
+  .review-item {
+    margin-bottom: 15px;
+    font-size: 1.1em;
+  }
+
+  .review-item strong {
+    font-weight: bold;
   }
 </style>

@@ -1,0 +1,13 @@
+<%= simple_form_for [@restaurant, @review], html: { local: true } do |form| %>
+  <div class="field">
+    <%= form.input :content, as: :text %>
+  </div>
+
+  <div class="field">
+    <%= form.input :rating, as: :integer %> <!-- Use :integer instead of :number -->
+  </div>
+
+  <div class="actions">
+    <%= form.button :submit %>
+  </div>
+<% end %>

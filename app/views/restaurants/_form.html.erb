@@ -1,28 +1,17 @@
-<% restaurant ||= Restaurant.new %>
-<div class="form-container">
-  <%= form_with(model: restaurant, local: true, html: { class: 'restaurant-form' }) do |form| %>
+<%= simple_form_for @restaurant do |form| %>
+  <%= form.simple_fields_for :reviews, restaurant.reviews.build do |review_form| %>
     <div class="form-group mb-3">
-      <%= form.label :name, class: 'form-label' %>
-      <%= form.text_field :name, class: 'form-control p-2' %>
+      <%= review_form.label :content, "Review Content", class: 'form-label' %>
+      <%= review_form.text_area :content, class: 'form-control p-2' %>
     </div>
 
     <div class="form-group mb-3">
-      <%= form.label :address, class: 'form-label' %>
-      <%= form.text_field :address, class: 'form-control p-2' %>
-    </div>
-
-    <div class="form-group mb-3">
-      <%= form.label :category, class: 'form-label' %>
-      <%= form.text_field :category, class: 'form-control p-2' %>
-    </div>
-
-    <div class="form-group mb-3">
-      <%= form.label :content, class: 'form-label' %>
-      <%= form.text_area :content, class: 'form-control p-2' %>
-    </div>
-
-    <div class="form-group">
-      <%= form.submit 'Save', class: 'btn btn-primary' %>
+      <%= review_form.label :rating, "Rating", class: 'form-label' %>
+      <%= review_form.number_field :rating, in: 0..5, class: 'form-control p-2' %>
     </div>
   <% end %>
-</div>
+
+  <div class="form-group">
+    <%= form.submit 'Submit Review', class: 'btn btn-primary' %>
+  </div>
+<% end %>

@@ -2,12 +2,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
 
 <div class="container">
-  <h1 style="text-align: center; color: #333; font-family: 'Roboto Slab', serif; font-size: 3em;"><strong>Edit restaurant</strong></h1>
+  <h1 class="page-title"><strong>Edit restaurant</strong></h1>
 
-  <div style="margin-bottom: 20px;">
+  <div class="form-container">
     <%= render 'form', restaurant: @restaurant %>
   </div>
-  <div style="text-align: center;">
+  <div class="back-to-list">
     <%= link_to 'Back to the list', restaurants_path, class: 'btn btn-success' %>
   </div>
 </div>

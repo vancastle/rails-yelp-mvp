@@ -6,17 +6,54 @@
 <div style="text-align: center;">
   <ul style="list-style-type: none; padding: 0; display: inline-block; text-align: left;">
     <% @restaurants.each do |restaurant| %>
-      <li style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+      <li style="margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-start;">
         <div style="flex-grow: 1; margin-right: 20px;">
-          <%= link_to restaurant.name, restaurant_path(restaurant), style: 'font-weight: 400; color: #007bff; font-size: 2em; font-family: "Roboto Slab", serif; text-decoration: none;' %>
+          <!-- Restaurant name and average rating stars -->
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <%= link_to restaurant.name, restaurant_path(restaurant), style: 'font-weight: 400; color: #007bff; font-size: 2em; font-family: "Roboto Slab", serif; text-decoration: none;' %>
+
+            <span style="font-size: 1.5em; margin-left: 10px;">
+              <!-- Average rating stars -->
+              <% total_rating = restaurant.average_rating %>
+              <% full_stars = total_rating.floor %>
+              <% half_star = total_rating - full_stars >= 0.5 %>
+              <% empty_stars = 5 - full_stars - (half_star ? 1 : 0) %>
+
+              <span class="rating">
+                <%= ''.html_safe + ('<span class="star">&#9733;</span>' * full_stars).html_safe + (half_star ? '<span class="star">&#9734;</span>' : '').html_safe + ('<span class="star empty">&#9734;</span>' * empty_stars).html_safe %>
+              </span>
+            </span>
+          </div>
+
+          <!-- Restaurant content below the name and stars -->
+          <p class="restaurant-content"><%= restaurant.content %></p>
         </div>
-        <div style="display: flex; align-items: center; gap: 10px;">
+
+        <!-- Action buttons (Edit, Delete) aligned to the left -->
+        <div class="action-buttons">
           <%= link_to 'Edit', edit_restaurant_path(restaurant), class: 'btn btn-secondary' %>
           <%= link_to 'Delete', restaurant, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
         </div>
       </li>
+
+      <!-- Display reviews for each restaurant -->
+      <ul style="list-style-type: none; padding-left: 20px;">
+        <% restaurant.reviews.each do |review| %>
+          <li class="review-item">
+            <strong>Review:</strong> <%= review.content %> <br>
+            <strong>Rating:</strong>
+            <% review.rating.times do %>
+              <span class="star">&#9733;</span> <!-- Full star for review rating -->
+            <% end %>
+            <% (5 - review.rating).times do %>
+              <span class="star empty">&#9733;</span> <!-- Empty star -->
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
     <% end %>
   </ul>
+
   <div style="text-align: center;">
     <%= link_to 'Add new restaurant', new_restaurant_path, class: 'btn btn-primary', style: 'margin-bottom: 20px; display: inline-block;' %>
   </div>
@@ -24,23 +61,15 @@
 
 <!-- You can move the following CSS into your application's stylesheet -->
 <style>
-  .page-title {
-    text-align: center;
-    color: #333;
-    font-family: 'Roboto Slab', serif;
-    font-size: 3em;
-  }
-
   .restaurant-list {
     text-align: center;
   }
 
   .restaurant-item {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    font-family: 'Roboto Slab', serif;
+    align-items: flex-start;
   }
 
   .restaurant-name {
@@ -59,14 +88,43 @@
     font-size: 1.2em;
   }
 
+  .star {
+    color: #ffd700; /* Golden color for filled stars */
+  }
+
+  .empty {
+    color: #ccc; /* Light grey color for empty stars */
+  }
+
+  .review-item {
+    margin-bottom: 15px;
+    font-size: 1.1em;
+  }
+
   .action-buttons {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 10px;
+    align-items: flex-start;
   }
 
   .add-restaurant {
     text-align: center;
     margin-top: 20px;
+  }
+
+  .restaurant-content {
+    font-size: 1.2em;
+    color: #333;
+    line-height: 1.5;
+    margin-top: 10px;
+  }
+
+  .review-item strong {
+    font-weight: bold;
+  }
+
+  .action-buttons .btn {
+    margin-bottom: 5px;
   }
 </style>
