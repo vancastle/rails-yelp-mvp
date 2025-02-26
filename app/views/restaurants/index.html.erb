@@ -1,0 +1,72 @@
+<h1 style="text-align: center; color: #333; font-family: 'Roboto Slab', serif; font-size: 3em;"><strong>Restaurants</strong></h1>
+
+<!-- Include Google Fonts link for Roboto Slab -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+
+<div style="text-align: center;">
+  <ul style="list-style-type: none; padding: 0; display: inline-block; text-align: left;">
+    <% @restaurants.each do |restaurant| %>
+      <li style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex-grow: 1; margin-right: 20px;">
+          <%= link_to restaurant.name, restaurant_path(restaurant), style: 'font-weight: 400; color: #007bff; font-size: 2em; font-family: "Roboto Slab", serif; text-decoration: none;' %>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <%= link_to 'Edit', edit_restaurant_path(restaurant), class: 'btn btn-secondary' %>
+          <%= link_to 'Delete', restaurant, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+  <div style="text-align: center;">
+    <%= link_to 'Add new restaurant', new_restaurant_path, class: 'btn btn-primary', style: 'margin-bottom: 20px; display: inline-block;' %>
+  </div>
+</div>
+
+<!-- You can move the following CSS into your application's stylesheet -->
+<style>
+  .page-title {
+    text-align: center;
+    color: #333;
+    font-family: 'Roboto Slab', serif;
+    font-size: 3em;
+  }
+
+  .restaurant-list {
+    text-align: center;
+  }
+
+  .restaurant-item {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Roboto Slab', serif;
+  }
+
+  .restaurant-name {
+    flex-grow: 1;
+    margin-right: 20px;
+    font-size: 2em;
+  }
+
+  .restaurant-link {
+    font-weight: 400;
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .restaurant-rating {
+    font-size: 1.2em;
+  }
+
+  .action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .add-restaurant {
+    text-align: center;
+    margin-top: 20px;
+  }
+</style>
